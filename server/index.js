@@ -15,6 +15,13 @@ io.on('connection',(socket)=>{
     socket.on('joinRoom',async (userName)=>{
         console.log(`${userName} is joining the Group`)
         await socket.join(room)
+        // io.to(room).emit("roomNotice",userName)
+        socket.to(room).emit("roomNotice",userName)
+    })
+    socket.on('message',async (object)=>{
+        console.log(object.name)
+        console.log(object.message)
+        socket.to(room).emit('message',object)
     })
 })
 
